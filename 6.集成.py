@@ -71,7 +71,7 @@ def ollama_generate_by_api(prompt, system):
         "response_format": {"type": "text"}
     }
     headers = {
-        "Authorization": "Bearer sk-xaaxeehzqfhzfsdzsjdbwsujcgewigtpvyhjewztcrjhnqac",
+        "Authorization": "Bearer your API",
         "Content-Type": "application/json"
     }
     response = requests.post(url, json=payload, headers=headers)
