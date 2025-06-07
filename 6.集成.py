@@ -3,18 +3,10 @@ import chromadb
 import requests
 import numpy as np
 import re
-import json
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
 
 def file_chunk_list():
-    with open("/Users/mirror/Desktop/code/REAL CODE/medical_filtered_60000.txt", encoding='utf-8') as fp:
-        lines = []
-        for i, line in enumerate(fp):
-            if i >= 1000:
-                break
-            lines.append(line)
-        data = ''.join(lines)
+    with open("/Users/mirror/Desktop/code/CODE/medical_filtered_60000.txt", encoding='utf-8') as fp:   
+        data = fp.read()
     entries = data.split("名称:")
     entries = [e.strip() for e in entries if e.strip()]
     chunk_list = []
@@ -53,7 +45,6 @@ def ollama_embedding_by_api(text):
 
 
 def ollama_generate_by_api(prompt, system):
-    print(prompt)
     url = "https://api.siliconflow.cn/v1/chat/completions"
     payload = {
         "model": "deepseek-ai/DeepSeek-R1",
@@ -71,7 +62,7 @@ def ollama_generate_by_api(prompt, system):
         "response_format": {"type": "text"}
     }
     headers = {
-        "Authorization": "Bearer your API",
+        "Authorization": "Bearer sk-xaaxeehzqfhzfsdzsjdbwsujcgewigtpvyhjewztcrjhnqac",
         "Content-Type": "application/json"
     }
     response = requests.post(url, json=payload, headers=headers)
@@ -106,7 +97,7 @@ def initial():
 
 
 def build_fullinfo_dict():
-    with open("/Users/mirror/Desktop/code/REAL CODE/medical_filtered_60000.txt", encoding='utf-8') as fp:
+    with open("/Users/mirror/Desktop/code/CODE/medical_filtered_60000.txt", encoding='utf-8') as fp:
         data = fp.read()
     entries = [e.strip() for e in data.split("名称:") if e.strip()]
     info_dict = {}
@@ -119,7 +110,7 @@ def build_fullinfo_dict():
 
 def run():
     # 关键字搜索
-    qs = "症状：骨膜炎, 体重减轻, 咯血, 盗汗, 乏力, 低热"
+    qs = "内痔出血的特点是什么？"
     qs_embedding = ollama_embedding_by_api(qs)
 
     client = chromadb.PersistentClient(path="db/chroma_demo")
@@ -149,7 +140,7 @@ def run():
 同时要求保证输出参考文献的80%，自行润色20%，
 如果参考信息不足以回答用户问题，请回复不知道，
 不要去杜撰任何信息。
-请用简体中文回答。"""
+请用英文回答。"""
     result = ollama_generate_by_api(prompt,system)
     print(result)
 
