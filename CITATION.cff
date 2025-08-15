@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: kyLe
+    given-names: Wu
+title: "RAG-Medical-model"
+version: 1.0.0
+date-released: 2025-08-15
+url: "https://github.com/Mirrormonesy/RAG-Medical-model"
